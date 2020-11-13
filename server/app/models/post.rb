@@ -1,6 +1,9 @@
 class Post
-  def initialize(source_data)
-    @source_data = source_data
+  def initialize(slug)
+    post_path = Rails.root.join('../assets/posts', slug + '.md')
+    @source_data = File.new(post_path, 'r').read
+
+    @slug = slug
     @metadata = @source_data
                 .split('===')
                 .second
@@ -21,5 +24,9 @@ class Post
 
   def content
     @source_data.split('===').last.strip
+  end
+
+  def slug
+    @slug
   end
 end
