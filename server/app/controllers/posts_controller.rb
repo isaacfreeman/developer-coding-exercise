@@ -4,7 +4,12 @@ class PostsController < ApplicationController
 
     if File.exists?(post_path) && !File.directory?(post_path)
       post_content = File.new(post_path, 'r').read
-      render json: { full_post_content: post_content }
+      post = Post.new(post_content)
+      render json: {
+        title: post.title,
+        author: post.author,
+        content: post.content
+       }
     else
       render json: { error: "Couldn't retrieve file" }
     end
