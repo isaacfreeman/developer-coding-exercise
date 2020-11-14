@@ -10,7 +10,7 @@ async function fetchPosts() {
 }
 
 export default function PostsPage() {
-  const { data, status, error } = useQuery("myQueryKey", fetchPosts)
+  const { data, status, error } = useQuery("postsQuery", fetchPosts)
 
   if (status === "loading") return "Loading..."
 
