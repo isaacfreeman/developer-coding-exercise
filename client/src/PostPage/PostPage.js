@@ -19,8 +19,6 @@ export default function Post() {
 
   if (error) return "An error has occurred: " + error.message
 
-  console.log(data)
-
   return (
     <div>
       <h1>{data.title}</h1>
@@ -28,9 +26,9 @@ export default function Post() {
       <div>
         <h2>Tags:</h2>
         <ol>
-          {data.tags.map((tag) => {
+          {data.tags.map((tag, index) => {
             return (
-                <li>
+                <li key={index}>
                   {tag}
                 </li>
             )
