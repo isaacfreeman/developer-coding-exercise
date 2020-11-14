@@ -19,11 +19,23 @@ export default function Post() {
 
   if (error) return "An error has occurred: " + error.message
 
+  console.log(data)
+
   return (
     <div>
       <h1>{data.title}</h1>
+      <div>{parse(data.content)}</div>
       <div>
-        {parse(data.content)}
+        <h2>Tags:</h2>
+        <ol>
+          {data.tags.map((tag) => {
+            return (
+                <li>
+                  {tag}
+                </li>
+            )
+          })}
+        </ol>
       </div>
     </div>
   )

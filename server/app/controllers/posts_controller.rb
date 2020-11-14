@@ -7,7 +7,8 @@ class PostsController < ApplicationController
     render json: {
       title: post.title,
       author: post.author,
-      content: post.content
+      content: post.content,
+      tags:  post.tags
     }
   end
 
@@ -18,7 +19,7 @@ class PostsController < ApplicationController
       post = Post.new(slug)
       {
         title: post.title,
-        slug:  post.slug
+        slug:  post.slug,
       }
     end
     render json: posts
