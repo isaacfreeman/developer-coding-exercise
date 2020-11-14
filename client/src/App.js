@@ -16,9 +16,6 @@ export default function App() {
               <li>
                 <Link to="/">Home</Link>
               </li>
-              <li>
-                <Link to="/post/foo">Post</Link>
-              </li>
             </ul>
           </nav>
 
