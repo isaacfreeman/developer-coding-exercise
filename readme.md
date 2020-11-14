@@ -1,53 +1,45 @@
 # Media Suite Coding Exercise
-We’d like you to build a blogging platform!
 
-This is designed as a relatively simple exercise to get some code we can talk about in our technical interview. Not all developers have code that they can share with us due to IP restrictions, and this provides a common scenario across all candidates that provides some level of objective measure.
+Here's my implementation of the blog exercise.
 
-Please spend no more than two hours on this task.  We respect your time far too much to ask for more than that.  If you don’t finish, that’s fine, we’ll talk through what you have completed.
+As discussed, I've used a Ruby on Rails server and a React client built with [create-react-app](https://create-react-app.dev).
 
-Please fork [https://github.com/mediasuitenz/developer-coding-exercise](https://github.com/mediasuitenz/developer-coding-exercise) and either email us a link to your public repo or zip up the source code and send it in.  Please don’t include any `node_modules` folders, we'll regenerate dependencies as part running the code.  If you use Django and pull in extra dependencies, then please update the `requirements.txt`.
+## Running locally
 
-If we can’t figure out how to get your application running, it’s been a waste of your time, so please include any instructions we might need to launch it.
-
-Please ask any questions you may have of your Media Suite contact. This is not a test of your ability to understand our written instructions, it really is just an opportunity to write some code.
-
-## The Output
-It's okay for this application to look very basic, though this is up to you. For example...
-
-### The list of posts
-![List of Posts](./posts.png)
-
-### An individual post
-![An individual post](./post.png)
-**NOTE**: The post files are in Markdown format, but they should render in the browser as html.
-
-## The Server
-* The `/assets/posts` folder contains text files with blog data in them. The file name is the URL slug.
-* The content of each file will be in the following format
-	```
-	===
-	Title: Blog Title
-	Author: Author Name
-	Slug: same-as-filename
-	===
-	# Markdown content will live here
-	This is some markdown paragraph text
-	```
-* Create a server API GET endpoint that returns the blog data from these files, including tags representing the most common 5 word in the article.  Tags should have stop words from a provided list and mark-up from the markdown removed.  The return data format should look like this (values are representative only):
+### Rails server
+```sh
+cd server
+gem install bundler
+bundle
+bundle exec rails server -p4000
 ```
-{
-  post: {
-    content: “...blog post content...”,
-    tags: ['word1', 'word2', ...]
-  }
-}
-```
-* Create a server API GET end-point that returns the list of all blog titles, and allows you to link to the individual posts in your client.
-* Please build the server in either Express or Django.
 
-## The Client
-* The client code should consume JSON data from the API and present it as two pages: a List of Posts and an individual Post. The URL should identify the page the user is on - i.e. a refresh should return the user to the same page, not return them to an initial location.
-* The tags should only be displayed on Post page, not on the List of Posts.
-* Please build the client in a Javascript client framework - e.g. Ember, React, Vue.js etc.
-* Don’t worry about styling/making the site look good. It purely needs to demonstrate that the javascript is consuming your API and turning the json into useful content on-screen.
-* We recommend you start by building the API to provide data to the client, but leave out the tags functionality initially.  Come back and complete the tags when the rest of the application is working and if you have the time.
+Both Rails and npm use port 3000 out of the box, so it's necessary to specify a different port for the server. The client is hard-coded to look for it on port 4000.
+
+### React client
+```sh
+cd ../client
+npm install
+npm start
+```
+
+## Notes
+
+I was able to complete the basic functionality in two hours, but there's a lot more I'd do for a real project.
+
+### Tests
+The code lacks tests!
+For most real projects I'd typically start with a some quick-and-dirty skeleton code to explore the problem. This allows me to determine whether I've understood the requirements correctly, whether there are any hidden gotchas, and whether my initial time estimates are accurate.
+Once I've seen the main features working, I shift gears to a more test-driven approach. I prefer to have fairly complete unit tests to cover the code, along with one or two integration tests demonstrating that some mission-critical features work correctly end-to-end.
+
+For this code, I'd expect to implement RSpec tests for the two methods in PostsController, and for each of the public methods on the Post class. On the React side, I'd use Jest to test each of the components.
+
+### Error handling
+I've implemented some basic boilerplate code for error handling in the React client, but ran out of time to report errors properly from the server side. I'd consider this necessary for a real MVP.
+
+### Tags
+The tags feature is present with stop words, but pretty basic. I see that it currently reports some Markdown code as tags, and doesn't handle punctuation or smart apostroophes well. These would be good areas to flesh out with a test-driven approach.
+
+### Readability
+For a real project, I'd also expect to spend some time making the code more readable for the next developer who needs to pick it up. This would include basic linting wiith Rubocop and ESLint (or similar) to conform with whatever style conventions the project is using. Also though, I'd want to sepnd some time refactoring for clarity. Some of the methods in the Posts model have long functional chains that are probably a bit hard to interpret from scratch, especially if the reader isn't familiar with the strudture of the data.
+My first approach would be to identify sections of code that could be extracted into named methods that clarify the intent. Following that, I'd add some brief comments in areas where they'd be most helpful.
