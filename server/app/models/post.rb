@@ -31,7 +31,7 @@ class Post
                 .second
                 .lines
                 .reject { |line| line.blank? }
-                .map  {|line| line.strip }
+                .map {|line| line.strip }
                 .map { |line| line.split(': ') }
                 .to_h
   end
@@ -56,9 +56,9 @@ class Post
 
   def tags
     body = @source_data.split('===').last.strip
-    words = body.split(" ")
-    words_with_counts = words.group_by(&:itself).transform_values(&:count).sort_by{|word,count| count}.reverse
+    words = body.split(' ')
+    words_with_counts = words.group_by(&:itself).transform_values(&:count).sort_by{ |word, count| count }.reverse
     words = words_with_counts.map{|word_with_count| word_with_count[0]}
-    words.reject{ |word| STOP_WORDS.include?(word.downcase) }.first(5)
+    words.reject { |word| STOP_WORDS.include?(word.downcase) }.first(5)
   end
 end
