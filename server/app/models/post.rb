@@ -23,7 +23,9 @@ class Post
   end
 
   def content
-    @source_data.split('===').last.strip
+    foo = @source_data.split('===').last.strip
+    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+    markdown.render(foo)
   end
 
   def slug

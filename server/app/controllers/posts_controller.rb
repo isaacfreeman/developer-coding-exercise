@@ -8,19 +8,19 @@ class PostsController < ApplicationController
       title: post.title,
       author: post.author,
       content: post.content
-      }
+    }
   end
 
   def index
     slugs = Dir.glob(Rails.root.join('../assets/posts/*')).map { |fn| File.basename(fn, File.extname(fn)) }
 
-    foo = slugs.map do |slug|
+    posts = slugs.map do |slug|
       post = Post.new(slug)
       {
         title: post.title,
         slug:  post.slug
       }
     end
-    render json: foo
+    render json: posts
   end
 end

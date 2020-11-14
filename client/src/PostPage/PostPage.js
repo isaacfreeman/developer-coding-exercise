@@ -1,13 +1,7 @@
 import React from "react"
 import { useParams } from "react-router-dom"
 import { useQuery } from "react-query"
-
-// async function fetchPost() {
-//   slug = "foo"
-//   const res = await fetch(`http://localhost:4000/posts/${slug}`)
-
-//   return await res.json()
-// }
+import parse from "html-react-parser"
 
 async function fetchPost(key, { slug }) {
   const res = await fetch(`http://localhost:4000/posts/${slug}`)
@@ -27,9 +21,9 @@ export default function Post() {
 
   return (
     <div>
-      <h2>{data.title}</h2>
+      <h1>{data.title}</h1>
       <div>
-        {data.content}
+        {parse(data.content)}
       </div>
     </div>
   )
